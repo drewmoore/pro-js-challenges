@@ -1,0 +1,22 @@
+{
+  "name": "pro-js-challenges",
+  "version": "1.0.0",
+  "description": "Improve your JS game with these code challenges. The point isn't to write something that \"just works\" but to use the guidelines in your implementation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewmoore/pro-js-challenges.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drewmoore/pro-js-challenges/issues"
+  },
+  "homepage": "https://github.com/drewmoore/pro-js-challenges#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
