@@ -2,7 +2,8 @@ const {
   appendObject,
   appendObjectImmutable,
   getNestedImmutable,
-  idsAsKeys
+  idsAsKeys,
+  isGreaterThanZero
 } = require('../src/app');
 
 describe('Pro JS', () => {
@@ -52,7 +53,19 @@ describe('Pro JS', () => {
       const result = getNestedImmutable(base);
 
       expect(result).toEqual(expected);
+      // Doesn't use jest's toEqual due to this function not using a strict check. Instead, using === for comparison
+      // checks if two sides of an expression are the same object in memory.
       expect(nestedBase === result.b).toBe(false);
+    });
+
+    it('returns false for an array with a negative value', () => {
+      const array = [1, 2, -1];
+      expect(isGreaterThanZero(array)).toBe(false)
+    });
+
+    it('returns true for an array without a negative value', () => {
+      const array = [1, 2, 3];
+      expect(isGreaterThanZero(array)).toBe(true)
     });
   });
 });
