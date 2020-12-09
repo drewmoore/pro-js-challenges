@@ -3,7 +3,10 @@ const {
   appendObjectImmutable,
   getNestedImmutable,
   idsAsKeys,
-  isGreaterThanZero
+  isGreaterThanZero,
+  multiplyAllArrayElements,
+  getNumberedList,
+  getAggregatedApiResults
 } = require('../src/app');
 
 describe('Pro JS', () => {
@@ -45,17 +48,17 @@ describe('Pro JS', () => {
       expect(idsAsKeys(array)).toEqual(expected);
     });
 
-    // This shows why tools such as immer.js are so popular...
+    // This demonstrates why tools such as immer.js are so popular...
     it('returns a deeply immutable copy of an object with a nested object', () => {
-      const nestedBase = { c: 1 };
-      const base = { a: 1, b: nestedBase };
-      const expected = { a: 1, b: { c: 1 } };
+      const nested = { c: 1 };
+      const base = { a: 1, nested };
       const result = getNestedImmutable(base);
+      const expected = { a: 1, nested: { c: 1 } };
 
       expect(result).toEqual(expected);
       // Doesn't use jest's toEqual due to this function not using a strict check. Instead, using === for comparison
       // checks if two sides of an expression are the same object in memory.
-      expect(nestedBase === result.b).toBe(false);
+      expect(nested === result.nested).toBe(false);
     });
 
     it('returns false for an array with a negative value', () => {
@@ -66,6 +69,24 @@ describe('Pro JS', () => {
     it('returns true for an array without a negative value', () => {
       const array = [1, 2, 3];
       expect(isGreaterThanZero(array)).toBe(true)
+    });
+
+    it('returns a mathematical result', () => {
+      const array = [1, 2, 3, 4];
+      expect(multiplyAllArrayElements(array)).toEqual(24)
+    });
+
+    it('returns a string value', () => {
+      const array = ['hello', 'here', 'is', 'a', 'numbered', 'list', 'of', 'words'];
+      expect(getNumberedList(array)).toEqual(' 1: hello 2: here 3: is 4: a 5: numbered 6: list 7: of 8: words');
+    });
+
+    // Example use case: you need to do something with the results of multiple API calls
+    it('chains promises', async () => {
+      const array = [1, 2, 3, 4];
+      const result = await getAggregatedApiResults(array);
+      // The function should add the results of an API, ignoring errors.
+      expect(result).toEqual(14);
     });
   });
 });
